@@ -16,8 +16,11 @@ public class Snake : MonoBehaviour
     public GameOverScreen gameOverScreen;
     public Food food;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timeText;
+    // public GameAsset gameAsset;
     private float score = 0f;
     private float speed = 1f;
+    private float aliveTime = 0f;
     private List<Transform> _segments = new List<Transform>();
     public Transform segmentPrefab;
 
@@ -31,25 +34,34 @@ public class Snake : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Snake Start");
+        GameAsset gameAsset = GameObject.Find("GameAsset").GetComponent<GameAsset>();
+        this.GetComponent<SpriteRenderer>().sprite = gameAsset.GetHead();
+        segmentPrefab.GetComponent<SpriteRenderer>().sprite = gameAsset.GetSegment();
         _segments.Add(this.transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (_state == State.Alive)
+        {
+            aliveTime += Time.deltaTime;
+            timeText.text = Mathf.RoundToInt(aliveTime).ToString();
+            scoreText.text = Mathf.RoundToInt(score).ToString();
+        }
     }
 
     void FixedUpdate()
-    {   
+    {
         HandleInput();
         if (_state == State.Alive)
         {
             UpdateSegments();
             Move();
         }
-        Debug.Log("Score: " + score);
-        Debug.Log("Food Score: " + food.GetScore());
+        // Debug.Log("Score: " + score);
+        // Debug.Log("Food Score: " + food.GetScore());
     }
 
     private void HandleInput()
@@ -88,6 +100,23 @@ public class Snake : MonoBehaviour
     {
         // _direction.x *= speed;
         // _direction.y *= speed;
+        if (_direction == Vector2.right)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else if (_direction == Vector2.down)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 0, -180);
+        }
+        else if (_direction == Vector2.left)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 0, -270);
+        }
+        else if (_direction == Vector2.up)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
         this.transform.position = new Vector3(
             Mathf.Round(this.transform.position.x + _direction.x),
             Mathf.Round(this.transform.position.y + _direction.y),
@@ -111,14 +140,13 @@ public class Snake : MonoBehaviour
             this.transform.position = new Vector3(this.transform.position.x, gridArea.bounds.max.y - 0.5f, 0);
         }
     }
-    
+
     private void Grow()
     {
         Transform newSegment = Instantiate(segmentPrefab);
         newSegment.position = _segments[_segments.Count - 1].position;
         _segments.Add(newSegment);
         score += food.GetScore();
-        scoreText.text = Mathf.RoundToInt(score).ToString();
         // speed *= 1.02f;
     }
 

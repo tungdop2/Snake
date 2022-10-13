@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Loader{
 
-    public enum Scene{
+    public enum Scene {
         GameScene,
         MainMenu,
         // LeaderboardScene,
