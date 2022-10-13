@@ -37,11 +37,12 @@ public class Snake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
+        
     }
 
     void FixedUpdate()
-    {
+    {   
+        HandleInput();
         if (_state == State.Alive)
         {
             UpdateSegments();
@@ -55,19 +56,31 @@ public class Snake : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            _direction = Vector2.right;
+            if (_direction != Vector2.left)
+            {
+                _direction = Vector2.right;
+            }
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            _direction = -Vector2.up;
+            if (_direction != Vector2.up)
+            {
+                _direction = Vector2.down;
+            }
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            _direction = -Vector2.right;
+            if (_direction != Vector2.right)
+            {
+                _direction = Vector2.left;
+            }
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            _direction = Vector2.up;
+            if (_direction != Vector2.down)
+            {
+                _direction = Vector2.up;
+            }
         }
     }
 
@@ -114,6 +127,10 @@ public class Snake : MonoBehaviour
         if (collision.tag == "Food")
         {
             Grow();
+        }
+        else if (collision.tag == "Segment")
+        {
+            Die();
         }
     }
 

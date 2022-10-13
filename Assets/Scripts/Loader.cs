@@ -7,8 +7,7 @@ public class Loader{
 
     public enum Scene{
         GameScene,
-        // MainMenu,
-        // GameOverScene,
+        MainMenu,
         // LeaderboardScene,
     }
 

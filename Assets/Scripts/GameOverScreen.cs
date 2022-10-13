@@ -22,4 +22,9 @@ public class GameOverScreen : MonoBehaviour
     {
         Loader.Load(Loader.Scene.GameScene);
     }
+
+    public void OnMenuButtonPressed()
+    {
+        Loader.Load(Loader.Scene.MainMenu);
+    }
 }
