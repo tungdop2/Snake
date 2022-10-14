@@ -11,7 +11,8 @@ public class Food : MonoBehaviour
     public float totalTime = 10f;
     private float aliveTime;
     // public TextMeshProUGUI remainTimeText;
-    private float score = 100f;
+    private float score = -1f;
+    private float init_score = 100f;
     private float cur_score = 0f;
     void Start()
     {
@@ -46,7 +47,13 @@ public class Food : MonoBehaviour
 
         aliveTime = 0;
         transform.localScale = Vector3.one;
-        score = 100f;
+        
+        if (score != -1f)
+        {
+            init_score *= 1.2f;
+        }
+        
+        score = init_score;
         totalTime *= 0.98f;
     }
 

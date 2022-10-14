@@ -29,6 +29,7 @@ public class Snake : MonoBehaviour
         gameOverScreen.Hide();
         score = 0f;
         speed = 1f;
+        Time.fixedDeltaTime = 0.08f;
     }
 
     // Start is called before the first frame update
@@ -147,16 +148,17 @@ public class Snake : MonoBehaviour
         newSegment.position = _segments[_segments.Count - 1].position;
         _segments.Add(newSegment);
         score += food.GetScore();
+        Time.fixedDeltaTime *= 0.98f;
         // speed *= 1.02f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Food")
+        if (collision.gameObject.tag == "Food")
         {
             Grow();
         }
-        else if (collision.tag == "Segment")
+        else if (collision.gameObject.tag == "Segment")
         {
             Die();
         }
@@ -173,8 +175,12 @@ public class Snake : MonoBehaviour
 
     public void Die()
     {
-        _state = State.Dead;
-        gameOverScreen.Show(score);
+        if (_state == State.Alive)
+        {
+            _state = State.Dead;
+            gameOverScreen.Show(score);
+            Database.CreateUser(MainMenuScreen.username, Mathf.RoundToInt(score));
+        }
     }
 
     public bool IsAlive()
