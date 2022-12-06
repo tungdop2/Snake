@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameAsset : MonoBehaviour
 {
+    public static int WIDTH = 50;
+    public static int HEIGHT = 28;
     public Sprite[] HEADS;
     public Sprite[] SEGMENTS;
 

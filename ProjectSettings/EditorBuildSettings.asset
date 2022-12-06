@@ -7,8 +7,23 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
+    guid: 944966ec044b7b44aa83694ccf0f74e3
+  - enabled: 1
+    path: Assets/Scenes/Multi/Loading.unity
+    guid: 818317f1bcce59f40b603c9cce1cd661
+  - enabled: 1
+    path: Assets/Scenes/Multi/MultiplayMenu.unity
     guid: 0d1e545ab6ce2be4288bbcadccb914a5
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/Multi/MultiplayScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Single/SingleplayMenu.unity
+    guid: 64408fb912cd8384488f5e763e9db2ed
+  - enabled: 1
+    path: Assets/Scenes/Single/SingleplayScene.unity
+    guid: cfa55c142f957d54f853e9e5328e6dec
+  - enabled: 1
+    path: Assets/Scenes/Single/Leaderboard.unity
+    guid: b4f1311fb472ac94fb057c8a6ccee0e5
   m_configObjects: {}

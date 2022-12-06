@@ -76,6 +76,7 @@ crashlytics-build.properties
 Parse*
 ExternalDependencyManager*
 Plugins*
+[Pp]hoton
 
 # Google Services (e.g. APIs or Firebase)
 google-services*

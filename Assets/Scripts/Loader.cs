@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 public class Loader{
 
     public enum Scene {
-        GameScene,
+        MultiplayMenu,
+        MultiplayScene,
+        SingleplayMenu,
+        SingleplayScene,
+        Leaderboard,
+        Loading,
         MainMenu,
-        // LeaderboardScene,
     }
 
     public static void Load(Scene scene){
