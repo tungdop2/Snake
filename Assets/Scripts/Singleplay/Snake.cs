@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Snake : MonoBehaviour
@@ -20,6 +21,15 @@ public class Snake : MonoBehaviour
     public GameObject scoreEffect;
     [SerializeField] private float _speed = 10f;
 
+    public Button upButton;
+    bool isUpButtonPressed = false;
+    public Button downButton;
+    bool isDownButtonPressed = false;
+    public Button leftButton;
+    bool isLeftButtonPressed = false;
+    public Button rightButton;
+    bool isRightButtonPressed = false;
+
     void Awake()
     {
         int rand_x = Random.Range(-10, 10);
@@ -28,6 +38,40 @@ public class Snake : MonoBehaviour
         List<Vector2> directions = new List<Vector2> { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         _direction = directions[Random.Range(0, 4)];
         _trueposition = transform.position;
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            SetupButton();
+        }
+        else
+        {
+            upButton.gameObject.SetActive(false);
+            downButton.gameObject.SetActive(false);
+            leftButton.gameObject.SetActive(false);
+            rightButton.gameObject.SetActive(false);
+        }
+    }
+
+    void SetupButton()
+    {
+        upButton.onClick.AddListener(() => { isUpButtonPressed = true; });
+        downButton.onClick.AddListener(() => { isDownButtonPressed = true; });
+        leftButton.onClick.AddListener(() => { isLeftButtonPressed = true; });
+        rightButton.onClick.AddListener(() => { isRightButtonPressed = true; });
+
+        SetTransparentButton(upButton);
+        SetTransparentButton(downButton);
+        SetTransparentButton(leftButton);
+        SetTransparentButton(rightButton);
+    }
+
+    void SetTransparentButton(Button button)
+    {
+        Image tmpImage;
+        tmpImage = button.GetComponent<Image>();
+        var tempColor = tmpImage.color;
+        tempColor.a = 0.5f;
+        tmpImage.color = tempColor;
     }
 
     // Start is called before the first frame update
@@ -62,33 +106,37 @@ public class Snake : MonoBehaviour
 
     private void HandleInput()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || isRightButtonPressed)
         {
             if (_direction != Vector2.left)
             {
                 _direction = Vector2.right;
             }
+            isRightButtonPressed = false;
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) || isDownButtonPressed)
         {
             if (_direction != Vector2.up)
             {
                 _direction = Vector2.down;
             }
+            isDownButtonPressed = false;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow) || isLeftButtonPressed)
         {
             if (_direction != Vector2.right)
             {
                 _direction = Vector2.left;
             }
+            isLeftButtonPressed = false;
         }
-        else if (Input.GetKey(KeyCode.UpArrow))
+        else if (Input.GetKey(KeyCode.UpArrow) || isUpButtonPressed)
         {
             if (_direction != Vector2.down)
             {
                 _direction = Vector2.up;
             }
+            isUpButtonPressed = false;
         }
     }
 

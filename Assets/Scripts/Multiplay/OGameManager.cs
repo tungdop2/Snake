@@ -10,13 +10,17 @@ public class OGameManager : MonoBehaviour
     public float score = 100f;
     public float foodTimer = 10f;
     public int food_num = 2;
-    bool isStart = false;
+    bool stopUpdate = false;
     OFood[] foods;
     OSnake[] snakes;
+    PhotonView view;
+    bool win = true;
 
     public static OGameManager instance;
+    public OGameOverScreen gameOverScreen;
     void Awake()
     {
+        gameOverScreen.Hide();
         instance = this;
     }
 
@@ -26,13 +30,25 @@ public class OGameManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        // timeCounter += Time.deltaTime;
-        snakes = FindObjectsOfType<OSnake>();
-        // don't start until there is at least 2 snakes
-        foods = FindObjectsOfType<OFood>();
-        if (snakes.Length >= 2 && !isStart)
+        if (stopUpdate)
         {
-            SpawnFood();
+            return;
+        }
+
+        if (isOver())
+        {
+            // GameOver();
+        }
+        else
+        {
+            // timeCounter += Time.deltaTime;
+            snakes = FindObjectsOfType<OSnake>();
+            // don't start until there is at least 2 snakes
+            foods = FindObjectsOfType<OFood>();
+            if (snakes.Length >= 2)
+            {
+                SpawnFood();
+            }
         }
     }
 
@@ -98,5 +114,34 @@ public class OGameManager : MonoBehaviour
             food.SetInitScore(score);
             food.SetTotalTime(foodTimer);
         }
+    }
+
+    bool isOver()
+    {
+        for (int i = 0; i < snakes.Length; i++)
+        {
+            if (!snakes[i].IsAlive())
+            {
+                if (snakes[i].IsMine())
+                {
+                    win = false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void GameOver()
+    {
+        if (win)
+        {
+            gameOverScreen.Show("You Win!");
+        }
+        else
+        {
+            gameOverScreen.Show("You Lose!");
+        }
+        stopUpdate = true;
     }
 }

@@ -152,6 +152,10 @@ MonoBehaviour:
   segmentPrefab: {fileID: 7204832013431144383, guid: f1547b284f0e8ce44a41c68f5984b032, type: 3}
   scoreEffect: {fileID: 5585782286160796295, guid: fc7cbc1d528f6434883b09b78a427edd, type: 3}
   _speed: 10
+  upButton: {fileID: 0}
+  downButton: {fileID: 0}
+  leftButton: {fileID: 0}
+  rightButton: {fileID: 0}
 --- !u!114 &1676212584836470429
 MonoBehaviour:
   m_ObjectHideFlags: 0

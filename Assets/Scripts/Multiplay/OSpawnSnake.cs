@@ -11,7 +11,8 @@ public class OSpawnSnake : MonoBehaviour
     {
         int rand_x = Random.Range(-10, 10);
         int rand_y = Random.Range(-10, 10);
-        PhotonNetwork.Instantiate(oSnakePrefab.name, new Vector2(rand_x, rand_y), Quaternion.identity);
+        GameObject go = (GameObject) PhotonNetwork.Instantiate(oSnakePrefab.name, new Vector2(rand_x, rand_y), Quaternion.identity);
+        OSnake snake = go.GetComponent<OSnake>();
     }
 
     // Update is called once per frame

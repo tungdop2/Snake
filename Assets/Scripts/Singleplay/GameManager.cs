@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     public float init_score = 100f;
     public float init_foodTimer = 10f;
     public int food_num = 5;
-    private float timeCounter = 0f;
-    bool isStart = false;
     Food[] foods;
     public Snake snake;
 
